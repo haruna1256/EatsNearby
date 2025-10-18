@@ -6,13 +6,36 @@
 //
 
 import SwiftUI
-import UIKit
+import MapKit
 // マップを表示するview
 // 現在地を取得してマップに青丸を表示する
 
 struct MapView: View {
+    @StateObject private var locationManager = LocationManager()
     var body: some View {
-        Text("Hello, world!")
+        ZStack {
+            // Map
+            Map(position: .constant(.region(locationManager.region))) {
+                // 現在地を青丸で表示
+                UserAnnotation()
+            }
+            .ignoresSafeArea()
+
+            // 位置取得前のガイド表示（オプション）
+            if locationManager.currentLocation == nil {
+                VStack {
+                    Text("現在地を取得しています…")
+                        .padding(12)
+                        .background(.ultraThinMaterial)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                    Spacer()
+                }
+                .padding()
+            }
+        }
+        .onAppear {
+            locationManager.requestLocation()
+        }
     }
 }
 
