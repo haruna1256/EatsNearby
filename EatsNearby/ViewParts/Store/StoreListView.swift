@@ -12,10 +12,14 @@ struct StoreListView: View {
 //    let store: Store
     var body: some View {
         HStack(spacing: 16) {
-            Image("store_image")
-                .resizable()
-                .frame(width: 72, height: 64)
-
+            ZStack {
+                Rectangle()
+                    .frame(width: 72, height: 64)
+                    .background(Color("accentSubColor"))
+                Image("store_image")
+                    .resizable()
+                    .frame(width: 72, height: 64)
+            }
             VStack(alignment: .leading) {
                 Text("お店の名前")
                     .font(.subheadline)
@@ -33,9 +37,9 @@ struct StoreListView: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 8)
-        .background(Color.blue)
+        .background(Color("bgColor"))
         .cornerRadius(8)
-        .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 2)
+        .shadow(color: Color("accentColor").opacity(0.1), radius: 3, x: 0, y: 2)
         .frame(maxWidth: .infinity)
         .frame(height: 72)
     }
