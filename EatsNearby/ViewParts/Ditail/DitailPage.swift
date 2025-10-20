@@ -55,6 +55,20 @@ struct DitailPage: View {
                     }
 
                 }
+                HStack(spacing: 0) {
+                    Button {
+                        print("道のりの表示")
+                    } label: {
+                        Text("ルート")
+                    }
+                    Button {
+                        print("電話をかける")
+                    } label: {
+                        Text("電話")
+                    }
+
+
+                }
             }
         }
     }
