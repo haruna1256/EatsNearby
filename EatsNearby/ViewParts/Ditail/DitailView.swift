@@ -1,14 +1,12 @@
 //
-//  DitailPage.swift
+//  DitailView.swift
 //  EatsNearby
 //
 //  Created by 川岸遥奈 on 2025/10/20.
 //
-
 import SwiftUI
 
-struct DitailPage: View {
-
+struct DitailView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
@@ -71,9 +69,10 @@ struct DitailPage: View {
                 }
             }
         }
+
     }
 }
 
 #Preview {
-    DitailPage()
+    DitailView()
 }
