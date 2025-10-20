@@ -11,7 +11,7 @@ import MapKit
 // 現在地を取得してマップに青丸を表示する
 
 struct MapView: View {
-    @StateObject private var locationManager = LocationManager()
+    @ObservedObject var locationManager: LocationManager
 
     /// MapCameraPosition を管理する @State
     @State private var mapPosition: MapCameraPosition = .region(
@@ -59,9 +59,7 @@ struct MapView: View {
                 .padding()
             }
         }
-        .onAppear {
-            locationManager.requestLocation()
-            // 初期 MapCameraPosition を現在地に設定する
+        .onAppear {            // 初期 MapCameraPosition を現在地に設定する
             if let loc = locationManager.currentLocation {
                 mapPosition = .region(MKCoordinateRegion(
                     center: loc.coordinate,
@@ -91,5 +89,6 @@ struct MapView: View {
 }
 
 #Preview {
-    MapView()
+    @StateObject var locationManager = LocationManager()
+    MapView(locationManager: locationManager)
 }
