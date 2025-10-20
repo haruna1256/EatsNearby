@@ -15,7 +15,7 @@ struct TopPageView: View {
             // マップとスクロールの縦幅は画面の半分のサイズに
             VStack(spacing: 6) {
                 // マップの表示
-                MapView()
+                MapView(locationManager: locationManager)
                     .frame(height: geometry.size.height / 2)
 
                 ScrollView {
