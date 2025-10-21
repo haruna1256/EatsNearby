@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+// 検索項目のリスト
 struct SearchListView: View {
     var body: some View {
         GeometryReader { geometry in
