@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// 汎用的なトグル可能行コンポーネント
+// トグル可能行コンポーネント
 struct SearchExpandableRow<Item: SelectableItem>: View {
     @EnvironmentObject var settings: SearchSettings
 
@@ -39,15 +39,17 @@ struct SearchExpandableRow<Item: SelectableItem>: View {
                     Spacer()
 
                     let currentValue = selectedItem?.displayName ?? condition.placeholder
-                    Text(currentValue)
-                        .foregroundStyle(currentValue == condition.placeholder ? Color("accentColor") : .primary)
-                        .font(.subheadline)
+                    HStack(spacing: 2) {
+                        Text(currentValue)
+                            .foregroundStyle(currentValue == condition.placeholder ? Color("accentColor") : .primary)
+                            .font(.subheadline)
 
-                    // 展開状態に応じて矢印を回転させる
-                    Image(systemName: "chevron.right")
-                        .font(.caption)
-                        .foregroundStyle(Color.secondary.opacity(0.6))
-                        .rotationEffect(.degrees(isExpanded ? 90 : 0)) // 矢印の回転
+                        // 展開状態に応じて矢印を回転させる
+                        Image(systemName: "chevron.right")
+                            .font(.caption)
+                            .foregroundStyle(Color("accentColor"))
+                            .rotationEffect(.degrees(isExpanded ? 90 : 0)) // 矢印の回転
+                    }
                 }
             }
             .padding(.horizontal, 16)
@@ -76,7 +78,7 @@ struct SearchExpandableRow<Item: SelectableItem>: View {
                             Spacer()
                             if selectedItem == item {
                                 Image(systemName: "checkmark")
-                                    .foregroundStyle(.blue)
+                                    .foregroundStyle(Color("accentColor"))
                             }
                             Spacer().frame(width: 10)
                         }
@@ -84,6 +86,7 @@ struct SearchExpandableRow<Item: SelectableItem>: View {
                         .padding(.vertical, 10)
                         .foregroundStyle(.primary)
                         .background(selectedItem == item ? Color.gray.opacity(0.1) : Color.clear)
+                        .contentShape(Rectangle()) 
                     }
                     .buttonStyle(.plain)
                     Divider().padding(.leading, 16 + 40 + 16)

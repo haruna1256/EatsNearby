@@ -52,7 +52,8 @@ struct SearchView: View {
 
         }
         .background(Image("bgImage"))
-        .environmentObject(settings) 
+        // settingsオブジェクトを環境オブジェクトとして注入
+        .environmentObject(settings)
     }
 }
 
