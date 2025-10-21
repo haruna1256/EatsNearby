@@ -8,8 +8,8 @@
 import SwiftUI
 // 検索時に表示される画面
 struct SearchView: View {
-    @StateObject var locationManager = LocationManager()
-    @State var distance: Double = 1.5 // 初期値を設定
+    @StateObject var settings = SearchSettings()
+
     var body: some View {
         VStack(spacing: 8) {
             // 現在地のマップの表示、検索範囲によって円の増減できたらいいな
@@ -19,14 +19,15 @@ struct SearchView: View {
                     .frame(height: 210)
                     .padding(.horizontal, 15)
                     .padding(.vertical, 15)
-                MapView(locationManager: locationManager)
+                MapView(locationManager: settings.locationManager)
                     .frame( height: 200)
                     .padding(.horizontal, 20)
                     .padding(.vertical, 20)
                     .cornerRadius(80)
             }
+            
             // 検索範囲を指定する
-            DistanceSliderView(selectedDistance: $distance)
+            DistanceSliderView(selectedDistance: $settings.distance)
                 .padding(.bottom, 8)
 
             Divider().padding(.horizontal, 16)
@@ -40,13 +41,7 @@ struct SearchView: View {
             
             Divider().padding(.horizontal, 16)
             // ジャンルの指定
-            VStack(spacing: 2) {
-                // 選択リストをループで全て表示できるようにする
-                ForEach(SearchCondition.allCases) { condition in
-                    SearchListView(condition: condition)
-                        .padding(.horizontal, 16)
-                }
-            }
+            SearchConditionCardContent()
             Spacer()
             Button {
                 print("この条件で検索")
@@ -57,6 +52,7 @@ struct SearchView: View {
 
         }
         .background(Image("bgImage"))
+        .environmentObject(settings) 
     }
 }
 

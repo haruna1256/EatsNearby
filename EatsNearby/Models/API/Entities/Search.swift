@@ -7,6 +7,16 @@
 
 import Foundation
 
+protocol SelectableItem: CaseIterable, Hashable {
+    var displayName: String { get }
+}
+
+// 既存の enum にルールを適用する
+
+extension HotpepperGenre: SelectableItem {}
+extension HotpepperBudget: SelectableItem {}
+
+
 // ジャンル
 enum HotpepperGenre: String, CaseIterable {
     case izakaya = "G001"          // 居酒屋
@@ -92,26 +102,3 @@ enum OptionFlag {
     case no
 }
 
-// UIでの条件からAPIが要求する形式に並べ替える
-//struct HotpepperSearchParams {
-//    var genre: HotpepperGenre?
-//    var budget: HotpepperBudget?
-//    var options: [HotpepperOption: OptionFlag] = [:]
-//
-//    func toQueryItems() -> [URLQueryItem] {
-//        var items: [URLQueryItem] = []
-//
-//        if let genre = genre {
-//            items.append(.init(name: "genre", value: genre.rawValue))
-//        }
-//        if let budget = budget {
-//            items.append(.init(name: "budget", value: budget.rawValue))
-//        }
-//
-//        for (option, flag) in options where flag == .yes {
-//            items.append(.init(name: option.parameterName, value: "1"))
-//        }
-//
-//        return items
-//    }
-//}

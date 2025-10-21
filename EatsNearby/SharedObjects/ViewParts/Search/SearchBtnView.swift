@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+// 検索ボタン
 struct SearchBtnView: View {
     var body: some View {
 
