@@ -12,25 +12,31 @@ struct SearchView: View {
     @State var distance: Double = 1.5 // 初期値を設定
     var body: some View {
         GeometryReader { geometry in
-            VStack() {
+            VStack(spacing: 4) {
                 ZStack {
                     Rectangle()
                         .foregroundStyle(Color("accentColor").opacity(0.8))
                         .frame(height: 210)
                         .padding(.horizontal, 15)
                         .padding(.vertical, 15)
-                        .cornerRadius(50)
-
                     MapView(locationManager: locationManager)
                         .frame( height: 200)
                         .padding(.horizontal, 20)
                         .padding(.vertical, 20)
-                        .cornerRadius(50)
+                        .cornerRadius(80)
                 }
 
 
+
                 DistanceSliderView(selectedDistance: $distance)
-//                SearchListView()
+                
+                VStack(spacing: 2) {
+                    // 選択リストをループで全て表示できるようにする
+                    ForEach(SearchCondition.allCases) { condition in
+                        SearchListView(condition: condition)
+                            .padding(.horizontal, 16)
+                    }
+                }
             }
             .background(Image("bgImage"))
         }
