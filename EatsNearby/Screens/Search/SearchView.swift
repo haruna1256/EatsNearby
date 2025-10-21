@@ -30,7 +30,7 @@ struct SearchView: View {
 
 
                 DistanceSliderView(selectedDistance: $distance)
-                SearchListView()
+//                SearchListView()
             }
             .background(Image("bgImage"))
         }

@@ -4,10 +4,12 @@
 //
 //  Created by 川岸遥奈 on 2025/10/20.
 //
-
 import SwiftUI
+
 // 検索項目のリスト
 struct SearchListView: View {
+    // 検索条件の定義から取得
+    let condition: SearchCondition
     var body: some View {
         GeometryReader { geometry in
             HStack(spacing: 16) {
@@ -15,21 +17,21 @@ struct SearchListView: View {
                     Rectangle()
                         .frame(width: 40, height: 40)
                         .foregroundStyle(Color("accentSubColor"))
-                    Image("dining")
+                    Image(condition.iconName)
                         .resizable()
                         .frame(width: 32, height: 32)
                 }
                 .cornerRadius(8)
 
                 HStack(spacing: 0) {
-                    Text("お店のジャンル")
+                    Text(condition.title)
                         .font(.caption2)
                         .lineLimit(1)
                     Spacer()
                     Button {
                         print("検索")
                     } label: {
-                        Text("好きなジャンルを選ぶ >")
+                        Text("\(condition.placeholder) >")
                             .foregroundStyle(Color("accentColor"))
                             .font(.caption)
                     }
@@ -53,5 +55,7 @@ struct SearchListView: View {
 }
 
 #Preview {
-    SearchListView()
+    SearchListView(
+        condition: .genre
+    )
 }
