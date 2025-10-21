@@ -25,12 +25,20 @@ struct SearchView: View {
                     .padding(.vertical, 20)
                     .cornerRadius(80)
             }
-
             // 検索範囲を指定する
             DistanceSliderView(selectedDistance: $distance)
+                .padding(.bottom, 8)
 
-            // キーワード検索するか
-
+            Divider().padding(.horizontal, 16)
+            // キーワード検索する
+            KeywordSearchView()
+            Text("お店の名前、料理名、駅名などで調べられます。")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .padding(.leading, 16) // 左端をアイコンと揃える
+                .padding(.bottom, 8)
+            
+            Divider().padding(.horizontal, 16)
             // ジャンルの指定
             VStack(spacing: 2) {
                 // 選択リストをループで全て表示できるようにする
@@ -40,7 +48,13 @@ struct SearchView: View {
                 }
             }
             Spacer()
-            SearchBtnView()
+            Button {
+                print("この条件で検索")
+            } label: {
+                SearchBtnView()
+            }
+
+
         }
         .background(Image("bgImage"))
     }
