@@ -11,10 +11,28 @@ struct SearchView: View {
     @StateObject var locationManager = LocationManager()
     @State var distance: Double = 1.5 // 初期値を設定
     var body: some View {
-        VStack() {
-            MapView(locationManager: locationManager)
-            DistanceSliderView(selectedDistance: $distance)
-            SearchListView()
+        GeometryReader { geometry in
+            VStack() {
+                ZStack {
+                    Rectangle()
+                        .foregroundStyle(Color("accentColor").opacity(0.8))
+                        .frame(height: 210)
+                        .padding(.horizontal, 15)
+                        .padding(.vertical, 15)
+                        .cornerRadius(50)
+
+                    MapView(locationManager: locationManager)
+                        .frame( height: 200)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 20)
+                        .cornerRadius(50)
+                }
+
+
+                DistanceSliderView(selectedDistance: $distance)
+                SearchListView()
+            }
+            .background(Image("bgImage"))
         }
     }
 }
