@@ -4,8 +4,8 @@
 //
 //  Created by 川岸遥奈 on 2025/10/20.
 //
-
 import SwiftUI
+
 // 最大距離を設定するためのカスタムビュー
 struct DistanceSliderView: View {
     // 距離 (km) の現在の値と親ビューをバインド
