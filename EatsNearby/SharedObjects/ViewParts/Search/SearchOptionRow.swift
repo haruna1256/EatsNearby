@@ -5,7 +5,7 @@
 //  Created by 川岸遥奈 on 2025/10/21.
 //
 import SwiftUI
-// 複数選択トグルビュー
+// その他の条件を選択する複数トグルビュー
 struct SearchOptionRow: View {
     @EnvironmentObject var settings: SearchSettings
 

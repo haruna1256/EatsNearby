@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-// リストコンテナ
+// 条件を表示するUI
 struct SearchConditionCardContent: View {
     @EnvironmentObject var settings: SearchSettings
     
@@ -43,7 +43,7 @@ struct SearchConditionCardContent: View {
 #Preview {
     // プレビュー表示したいビューのインスタンスを作成
     SearchConditionCardContent()
-    // 必須: ダミーの SearchSettings インスタンスを注入する
+    // ダミーの SearchSettings インスタンスを注入する
     .environmentObject(SearchSettings())
 
     // プレビューを見やすくするために、背景やパディングを追加しても良い

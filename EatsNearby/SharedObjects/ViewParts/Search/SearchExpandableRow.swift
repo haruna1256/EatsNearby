@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// トグル可能行コンポーネント
+// ジャンルと予算を表示するトグルビュー
 struct SearchExpandableRow<Item: SelectableItem>: View {
     @EnvironmentObject var settings: SearchSettings
 
