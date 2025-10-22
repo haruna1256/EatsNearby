@@ -14,6 +14,8 @@ class SearchSettings: ObservableObject {
     // 選択されたジャンルと予算の状態
     @Published var selectedGenre: HotpepperGenre? = nil
     @Published var selectedBudget: HotpepperBudget? = nil
+    // こだわりの条件は複数選択
+    @Published var selectedOptions: Set<HotpepperOption> = []
 
     // 展開/折りたたみ状態の管理
     @Published var isGenreExpanded: Bool = false

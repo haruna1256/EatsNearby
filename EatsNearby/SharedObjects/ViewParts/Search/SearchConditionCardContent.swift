@@ -35,15 +35,7 @@ struct SearchConditionCardContent: View {
             }
 
             // こだわり条件 (チェックマーク形式)
-            SearchListView(
-                condition: .options,
-                currentValue: SearchCondition.options.placeholder,
-                action: {
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        settings.isOptionsExpanded.toggle()
-                    }
-                }
-            )
+            SearchOptionRow()
         }
     }
 }

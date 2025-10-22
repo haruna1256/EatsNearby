@@ -81,11 +81,20 @@ enum HotpepperBudget: String, CaseIterable {
     }
 }
 // 絞り込み（個室・飲み放題など）
-enum HotpepperOption {
+enum HotpepperOption: CaseIterable, Hashable {
     case privateRoom
     case freeDrink
     case freeFood
     case card
+
+    var displayName: String {
+        switch self {
+        case .privateRoom: "個室あり"
+        case .freeDrink: "飲み放題あり"
+        case .freeFood: "食べ放題あり"
+        case .card: "カード利用可"
+        }
+    }
 
     var parameterName: String {
         switch self {
