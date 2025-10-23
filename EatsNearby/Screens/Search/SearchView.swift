@@ -42,6 +42,7 @@ struct SearchView: View {
             Divider().padding(.horizontal, 16)
             // ジャンルの指定
             SearchConditionCardContent()
+               
             Spacer()
             Button {
                 print("この条件で検索")
