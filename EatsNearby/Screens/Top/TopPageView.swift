@@ -29,11 +29,6 @@ struct TopPageView: View {
 
                 }
                 .frame(height: geometry.size.height / 2)
-                // ScrollView の背景画像
-                .background(
-                    Image("bgImage")
-                        .resizable()
-                )
                 .overlay(
                     Button(action: {
                         // 検索ページを表示するフラグをONにする
@@ -50,6 +45,10 @@ struct TopPageView: View {
                     SearchView()
                 }
             }
+            .background(
+                Image("bgImage")
+                    .resizable()
+            )
         }
         // 位置情報の要求を開始
         .onAppear {
