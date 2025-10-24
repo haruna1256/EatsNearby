@@ -37,7 +37,7 @@ struct TopPageView: View {
                 // マップとスクロールの縦幅は画面の半分のサイズに
                 VStack(spacing: 6) {
                     // マップの表示
-                    MapView(locationManager: locationManager)
+                    MapView(locationManager: locationManager, shops: viewModel.nearbyShops)
                         .frame(height: geometry.size.height / 2)
 
                     // 周辺のお店の検索

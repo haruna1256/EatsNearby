@@ -12,6 +12,7 @@ import MapKit
 
 struct MapView: View {
     @ObservedObject var locationManager: LocationManager
+    let shops: [Shop] // Pinのデータ
 
     /// MapCameraPosition を管理する @State
     @State private var mapPosition: MapCameraPosition = .region(
@@ -27,6 +28,13 @@ struct MapView: View {
             Map(position: $mapPosition, interactionModes: [.all]) {
                 // 現在地を青丸で表示
                 UserAnnotation()
+                ForEach(shops) { shop in
+                    if let lat = shop.lat, let lng = shop.lng {
+                        // 緯度と経度が Double? 型であると仮定して、CLLocationCoordinate2D に変換
+                        Marker(shop.name, coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lng))
+                            .tint(.red) // Pinの色を設定
+                    }
+                }
             }
             .ignoresSafeArea()
 
@@ -88,7 +96,11 @@ struct MapView: View {
     }
 }
 
-#Preview {
-    @StateObject var locationManager = LocationManager()
-    MapView(locationManager: locationManager)
+struct MapViewView_Previews: PreviewProvider {
+    static var previews: some View {
+        let dummyShops: [Shop] = []
+
+        @StateObject var locationManager = LocationManager()
+        MapView(locationManager: locationManager, shops: dummyShops)
+    }
 }
