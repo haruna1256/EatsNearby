@@ -8,11 +8,19 @@
 import SwiftUI
 
 struct TopPageView: View {
+    // TopPageViewModelをLocationManagerを渡して初期化
+    @StateObject private var viewModel: TopPageViewModel
     // LocationManagerは @StateObject として定義
     @StateObject var locationManager = LocationManager()
     // 検索ページに表示するモーダルの状態の管理
     @State private var isShowingSearch = false
+    // ViewModelを初期化
+    init() {
+        _viewModel = StateObject(wrappedValue: TopPageViewModel(locationManager: LocationManager()))
+    }
     var body: some View {
+        // 位置情報の要求
+        let _ = locationManager.requestLocation()
         GeometryReader { geometry in
             // マップとスクロールの縦幅は画面の半分のサイズに
             VStack(spacing: 6) {
@@ -20,9 +28,20 @@ struct TopPageView: View {
                 MapView(locationManager: locationManager)
                     .frame(height: geometry.size.height / 2)
 
+                // 周辺のお店の検索
                 ScrollView {
                     VStack(spacing: 16) {
-                        StoreListView()
+                        // ロード中、エラー、リストを表示
+                        if viewModel.isLoading {
+                            ProgressView("現在地周辺のお店を検索中...")
+                                .padding()
+                        } else if let error = viewModel.errorMessage {
+                            Text("\(error)")
+                                .foregroundStyle(Color("accentColor"))
+                                .padding()
+                        } else {
+                            StoreListView()
+                        }
                     }
                     .padding(.horizontal, 16) // リスト全体に水平方向の余白
                     .padding(.top, 8)         // 上部に少し余白
@@ -49,11 +68,6 @@ struct TopPageView: View {
                     .resizable()
             )
         }
-        // 位置情報の要求を開始
-        .onAppear {
-            locationManager.requestLocation()
-        }
-
     }
 }
 
