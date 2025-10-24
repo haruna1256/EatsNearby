@@ -45,7 +45,7 @@ struct StoreListContainerView: View {
                 }
                 // 遷移の設定: selectedShop が nil でなければ詳細画面を表示
                 .navigationDestination(item: $selectedShop) { shop in
-                    DitailPageView(shop: shop)
+                    DetailPageView(shop: shop)
                 }
             }
         }

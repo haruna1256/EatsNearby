@@ -17,10 +17,10 @@ struct SearchMapView: View {
     @State private var currentRegion: MKCoordinateRegion
     // Helper: 距離（メートル）に基づいて適切なズームレベルの span を計算
     private static func zoomSpan(for radius: Double) -> MKCoordinateSpan {
-        // 例: 検索範囲の約2倍の幅をマップに表示するための簡単な計算
-        let meterPerDegree: Double = 111_000.0 // 緯度1度あたりのメートル数（概算）
+        // 検索範囲の約2倍の幅をマップに表示するための簡単な計算
+        let meterPerDegree: Double = 111_000.0 // 緯度1度あたりのメートル数
         let spanDelta = (radius * 2.5) / meterPerDegree
-        // ズームは緯度と経度のデルタを同じにすると綺麗に見えることが多い
+        // ズームは緯度と経度のデルタを同じにする
         return MKCoordinateSpan(latitudeDelta: spanDelta, longitudeDelta: spanDelta)
     }
 

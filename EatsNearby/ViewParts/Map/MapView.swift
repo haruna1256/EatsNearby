@@ -14,6 +14,9 @@ struct MapView: View {
     @ObservedObject var locationManager: LocationManager
     let shops: [Shop] // Pinのデータ
 
+    // タップされたお店を保持する
+    @State private var selectedShop: Shop? = nil
+
     /// MapCameraPosition を管理する @State
     @State private var mapPosition: MapCameraPosition = .region(
         MKCoordinateRegion(
@@ -32,7 +35,8 @@ struct MapView: View {
                     if let lat = shop.lat, let lng = shop.lng {
                         // 緯度と経度が Double? 型であると仮定して、CLLocationCoordinate2D に変換
                         Marker(shop.name, coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lng))
-                            .tint(.red) // Pinの色を設定
+                            .tint(Color("accentColor"))     // Pinの色を設定
+                            .tag(shop.id)                   // Mapのタップ識別用
                     }
                 }
             }
@@ -67,6 +71,16 @@ struct MapView: View {
                 .padding()
             }
         }
+        .onTapGesture { tapPoint in
+            // Map上のピンのタップは Marker の action で処理するのが最も簡単です
+        }
+
+        // 詳細情報をシートで表示する
+        .sheet(item: $selectedShop) { shop in
+            // ShopDetailView（お店の詳細情報を表示するカスタムビュー）を呼び出す
+            DetailPageView(shop: shop)
+        }
+
         .onAppear {            // 初期 MapCameraPosition を現在地に設定する
             if let loc = locationManager.currentLocation {
                 mapPosition = .region(MKCoordinateRegion(
