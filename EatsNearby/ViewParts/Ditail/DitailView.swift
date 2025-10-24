@@ -51,11 +51,14 @@ struct DitailView: View {
                                 image
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
+                                    .frame(width: UIScreen.main.bounds.width, height: 400)
+                                    .clipped()
                             default:
                                 Color.gray.opacity(0.2) // ロード中または失敗時のプレースホルダー
+                                    .frame(width: UIScreen.main.bounds.width, height: 200)
                             }
                         }
-                        .clipped()
+                        .frame(maxWidth: .infinity, alignment: .center)
                     }
                     .frame(height: geometry.size.height / 2)
 
@@ -68,14 +71,14 @@ struct DitailView: View {
                                 .font(.title2).bold()
                                 .foregroundStyle(Color("textColor"))
 
-                            HStack() {
-                                Text(shop.genre?.name ?? "")
-                                    .font(.callout)
-                                    .foregroundStyle(Color("accentColor").opacity(0.8))
-                                Text(shop.catchPhrase ?? "キャッチフレーズなし")
-                                    .font(.callout)
-                                    .foregroundStyle(Color("accentColor").opacity(0.8))
-                            }
+
+                            Text(shop.genre?.name ?? "")
+                                .font(.callout)
+                                .foregroundStyle(Color("accentColor").opacity(0.8))
+                            Text(shop.catchPhrase ?? "キャッチフレーズなし")
+                                .font(.callout)
+                                .foregroundStyle(Color("accentColor").opacity(0.8))
+
 
                         }
                         .padding(.top, 16)
@@ -95,36 +98,35 @@ struct DitailView: View {
                         }
                         Spacer().frame(height: 20)
                     }
+                    .padding()
                     .frame(maxWidth: .infinity)
+                    HStack(spacing: 12) {
+                        // 地図を見る/電話をかける ボタン
+                        HStack(spacing: 16) {
 
-                    VStack {
-                        HStack(spacing: 12) {
-                            // 地図を見る/電話をかける ボタン
-                            HStack(spacing: 16) {
+                            // 地図を見るボタン
+                            ActionButton(iconName: "map", label: "ルートを検索", action: { print("地図へ") })
 
-                                // 地図を見るボタン
-                                ActionButton(iconName: "map", label: "ルートを検索", action: { print("地図へ") })
-
-                                // 電話をかけるボタン
-                                ActionButton(iconName: "phone.fill", label: "電話をかける", action: { print("電話をかける") })
-                            }
-
-                            // 予約するボタン（メインアクション）
-                            Button(action: {
-                                print("予約する")
-                            }) {
-                                Text("予約する")
-                                    .font(.headline).bold()
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 50)
-                                    .background(Color("accentColor"))
-                                    .foregroundStyle(.white)
-                                    .cornerRadius(8)
-                            }
-                            .frame(maxWidth: .infinity)
+                            // 電話をかけるボタン
+                            ActionButton(iconName: "phone.fill", label: "電話をかける", action: { print("電話をかける") })
                         }
-                        .padding(.horizontal, 20)
+
+                        // 予約するボタン（メインアクション）
+                        Button(action: {
+                            print("予約する")
+                        }) {
+                            Text("予約する")
+                                .font(.headline).bold()
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 50)
+                                .background(Color("accentColor"))
+                                .foregroundStyle(.white)
+                                .cornerRadius(8)
+                        }
+                        .frame(maxWidth: .infinity)
                     }
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 80)
                 }
             }
         }

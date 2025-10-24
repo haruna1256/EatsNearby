@@ -38,6 +38,7 @@ struct StoreListContainerView: View {
                             shop: shop,
                             userLocation: userCoordinate // 座標を渡す
                         )
+                        .padding(.top, 8)
                     }
                     // デフォルトのボタンの色を変えないように調整
                     .buttonStyle(.plain)

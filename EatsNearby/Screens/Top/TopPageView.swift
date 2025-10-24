@@ -60,21 +60,21 @@ struct TopPageView: View {
 
                     }
                     .frame(height: geometry.size.height / 2)
-                    .overlay(
-                        Button(action: {
-                            // 検索ページを表示するフラグをONにする
-                            isShowingSearch = true
-                        }){
-                            SearchIconView()
-                                .padding()
-                                .padding(.trailing, 8)
-                        },
-                        alignment: .bottomTrailing
-                    )
                     .sheet(isPresented: $isShowingSearch) {
                         SearchView(settings: searchSettings)
                     }
                 }
+                .overlay(
+                    Button(action: {
+                        // 検索ページを表示するフラグをONにする
+                        isShowingSearch = true
+                    }){
+                        SearchIconView()
+                            .padding()
+                            .padding(.trailing, 8)
+                    },
+                    alignment: .bottomTrailing
+                )
                 .background(
                     Image("bgImage")
                         .resizable()
