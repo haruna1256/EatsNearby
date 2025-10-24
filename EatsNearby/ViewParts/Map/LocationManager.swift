@@ -16,6 +16,11 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     /// 現在地
     @Published var currentLocation: CLLocation?
 
+    // 緯度・経度をDoubleとして公開
+    @Published var latitude: Double = 35.6895 // デフォルト値
+    @Published var longitude: Double = 139.6917 // デフォルト値
+        //
+
     /// Map表示用のリージョン（最初は東京）
     @Published var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 35.6895, longitude: 139.6917),
@@ -48,6 +53,10 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         guard let location = locations.last else { return }
 
         currentLocation = location
+        // 緯度・経度のDoubleプロパティを更新
+        latitude = location.coordinate.latitude
+                longitude = location.coordinate.longitude
+
         region = MKCoordinateRegion(
             center: location.coordinate,
             span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)

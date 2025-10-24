@@ -9,8 +9,11 @@ import Foundation
 class SearchSettings: ObservableObject {
     @Published var keyword: String = ""
     @Published var distance: Double = 1.0
-
-    @Published var locationManager = LocationManager() 
+    @Published var locationManager = LocationManager()
+    // 検索範囲
+    var rangeCode: Int {
+        return Int(distance.rounded())
+    }
     // 選択されたジャンルと予算の状態
     @Published var selectedGenre: HotpepperGenre? = nil
     @Published var selectedBudget: HotpepperBudget? = nil

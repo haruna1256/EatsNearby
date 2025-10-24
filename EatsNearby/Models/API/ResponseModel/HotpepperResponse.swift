@@ -16,6 +16,7 @@ struct Results: Codable {
     let resultsAvailable: Int?    // クエリー条件にマッチする、検索結果の全件数
     let resultsReturned: String?  // このＸＭＬに含まれる検索結果の件数
     let resultsStart: Int?        // 検索結果の開始位置
+    let errorText: String?       // APIからのエラーメッセージ
 
     // 店舗データの配列
     let shop: [Shop]
@@ -26,6 +27,7 @@ struct Results: Codable {
         case resultsAvailable = "results_available"
         case resultsReturned = "results_returned"
         case resultsStart = "results_start"
+        case errorText = "error" 
         case shop
     }
 }
