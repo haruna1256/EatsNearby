@@ -12,6 +12,8 @@ struct StoreListContainerView: View {
     @State private var selectedShop: Shop? = nil
     // 複数の店舗情報（配列）を受け取る
     let shops: [Shop]
+    // ルート検索を実行するためのアクションを親ビューから受け取る
+    let onFindRoute: (Shop) -> Void
     // LocationManager（現在地を取得するため）を受け取る
     @ObservedObject var locationManager: LocationManager
 
@@ -45,7 +47,7 @@ struct StoreListContainerView: View {
                 }
                 // 遷移の設定: selectedShop が nil でなければ詳細画面を表示
                 .navigationDestination(item: $selectedShop) { shop in
-                    DetailPageView(shop: shop)
+                    DetailPageView(shop: shop, onFindRoute: self.onFindRoute)
                 }
             }
         }

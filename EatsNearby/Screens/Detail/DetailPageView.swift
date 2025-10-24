@@ -9,8 +9,18 @@ import SwiftUI
 
 struct DetailPageView: View {
     let shop: Shop
+    // ルート検索を実行するためのクロージャ
+    let onFindRoute: (Shop) -> Void
+
+    @Environment(\.dismiss) var dismiss
     var body: some View {
-        DetailView(shop: shop)
+        DetailView(shop: shop, onFindRoute: { selectedShop in
+                    // MapViewにアクションを伝える
+                    self.onFindRoute(selectedShop)
+
+                    // 詳細シートを閉じる
+                    dismiss() // シートを閉じる
+                })
     }
 }
 
@@ -39,6 +49,6 @@ struct DetailPageView_Previews: PreviewProvider {
                 pc: PCPhoto(l: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?fit=crop&w=800&q=80", m: nil, s: nil)
             )
         )
-        DetailPageView(shop: dummyShop)
+        DetailPageView(shop: dummyShop, onFindRoute: { _ in print("Route action triggered in Preview") })
     }
 }

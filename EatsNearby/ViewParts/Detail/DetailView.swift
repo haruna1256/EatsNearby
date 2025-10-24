@@ -9,6 +9,8 @@ import SwiftUI
 struct DetailView: View {
     // お店の情報を受け取る
     let shop: Shop
+    // ルート検索を実行するためのクロージャ
+    let onFindRoute: (Shop) -> Void
     // 適切な画像URLを選択する計算プロパティ
     var shopImageUrl: String? {
         // photo.pc.l, photo.mobile.l, logoImage の順に優先
@@ -105,7 +107,7 @@ struct DetailView: View {
                         HStack(spacing: 16) {
 
                             // 地図を見るボタン
-                            ActionButton(iconName: "map", label: "ルートを検索", action: { print("地図へ") })
+                            ActionButton(iconName: "map", label: "ルートを検索", action: {  onFindRoute(shop) })
 
                             // 電話をかけるボタン
                             ActionButton(iconName: "phone.fill", label: "電話をかける", action: { print("電話をかける") })
@@ -180,6 +182,6 @@ struct DetailView_Previews: PreviewProvider {
                 pc: PCPhoto(l: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?fit=crop&w=800&q=80", m: nil, s: nil)
             )
         )
-        DetailView(shop: dummyShop)
+        DetailView(shop: dummyShop, onFindRoute: { _ in print("Route action triggered in Preview") })
     }
 }
