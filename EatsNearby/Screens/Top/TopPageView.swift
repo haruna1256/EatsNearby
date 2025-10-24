@@ -34,7 +34,6 @@ struct TopPageView: View {
                         // 検索ページを表示するフラグをONにする
                         isShowingSearch = true
                     }){
-                        // カメラボタン
                         SearchIconView()
                             .padding()
                             .padding(.trailing, 8)
