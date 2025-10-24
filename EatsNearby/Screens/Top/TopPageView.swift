@@ -114,7 +114,7 @@ struct TopPageView: View {
         let request = MKDirections.Request()
         request.source = MKMapItem(placemark: sourcePlacemark)
         request.destination = MKMapItem(placemark: destinationPlacemark)
-        request.transportType = .automobile
+        request.transportType = .walking
         request.requestsAlternateRoutes = false
 
         MKDirections(request: request).calculate { response, error in
