@@ -32,52 +32,54 @@ struct TopPageView: View {
         ))
     }
     var body: some View {
-        GeometryReader { geometry in
-            // マップとスクロールの縦幅は画面の半分のサイズに
-            VStack(spacing: 6) {
-                // マップの表示
-                MapView(locationManager: locationManager)
-                    .frame(height: geometry.size.height / 2)
+        NavigationStack {
+            GeometryReader { geometry in
+                // マップとスクロールの縦幅は画面の半分のサイズに
+                VStack(spacing: 6) {
+                    // マップの表示
+                    MapView(locationManager: locationManager)
+                        .frame(height: geometry.size.height / 2)
 
-                // 周辺のお店の検索
-                ScrollView {
-                    VStack(spacing: 16) {
-                        // ロード中、エラー、リストを表示
-                        if viewModel.isLoading {
-                            ProgressView("現在地周辺のお店を検索中...")
-                                .padding()
-                        } else if let error = viewModel.errorMessage {
-                            Text("\(error)")
-                                .foregroundStyle(Color("accentColor"))
-                                .padding()
-                        } else {
-                            StoreListContainerView(shops: viewModel.nearbyShops, locationManager: locationManager)
+                    // 周辺のお店の検索
+                    ScrollView {
+                        VStack(spacing: 16) {
+                            // ロード中、エラー、リストを表示
+                            if viewModel.isLoading {
+                                ProgressView("現在地周辺のお店を検索中...")
+                                    .padding()
+                            } else if let error = viewModel.errorMessage {
+                                Text("\(error)")
+                                    .foregroundStyle(Color("accentColor"))
+                                    .padding()
+                            } else {
+                                StoreListContainerView(shops: viewModel.nearbyShops, locationManager: locationManager)
+                            }
                         }
-                    }
-                    .padding(.horizontal, 16) // リスト全体に水平方向の余白
-                    .padding(.top, 8)         // 上部に少し余白
+                        .padding(.horizontal, 16) // リスト全体に水平方向の余白
+                        .padding(.top, 8)         // 上部に少し余白
 
+                    }
+                    .frame(height: geometry.size.height / 2)
+                    .overlay(
+                        Button(action: {
+                            // 検索ページを表示するフラグをONにする
+                            isShowingSearch = true
+                        }){
+                            SearchIconView()
+                                .padding()
+                                .padding(.trailing, 8)
+                        },
+                        alignment: .bottomTrailing
+                    )
+                    .sheet(isPresented: $isShowingSearch) {
+                        SearchView(settings: searchSettings)
+                    }
                 }
-                .frame(height: geometry.size.height / 2)
-                .overlay(
-                    Button(action: {
-                        // 検索ページを表示するフラグをONにする
-                        isShowingSearch = true
-                    }){
-                        SearchIconView()
-                            .padding()
-                            .padding(.trailing, 8)
-                    },
-                    alignment: .bottomTrailing
+                .background(
+                    Image("bgImage")
+                        .resizable()
                 )
-                .sheet(isPresented: $isShowingSearch) {
-                    SearchView(settings: searchSettings)
-                }
             }
-            .background(
-                Image("bgImage")
-                    .resizable()
-            )
         }
         // 位置情報の要求
         .onAppear {

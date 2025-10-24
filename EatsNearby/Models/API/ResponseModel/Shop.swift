@@ -7,7 +7,7 @@
 import Foundation
 
 // 個々のお店の情報
-struct Shop: Codable, Identifiable {
+struct Shop: Codable, Identifiable, Hashable {
     var id: String { idString }
 
     // 基本情報
@@ -43,7 +43,7 @@ struct Shop: Codable, Identifiable {
     let photo: Photo?               // 写真
 
     // JSONのキーとプロパティ名を対応させる
-    enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey, Hashable {
         case idString = "id"
         case name
         case nameKana = "name_kana"
