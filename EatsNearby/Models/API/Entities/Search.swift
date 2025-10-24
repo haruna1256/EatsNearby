@@ -54,6 +54,10 @@ enum HotpepperGenre: String, CaseIterable {
         case .other: "その他グルメ"
         }
     }
+
+    var parameterName: String {
+            return self.rawValue
+        }
 }
 
 // 予算
@@ -79,6 +83,11 @@ enum HotpepperBudget: String, CaseIterable {
         case .none: "指定なし"
         }
     }
+    
+    var parameterName: String {
+
+            return self.rawValue
+        }
 }
 // 絞り込み（個室・飲み放題など）
 enum HotpepperOption: CaseIterable, Hashable {

@@ -9,7 +9,7 @@ import SwiftUI
 
 // ジャンルと予算を表示するトグルビュー
 struct SearchExpandableRow<Item: SelectableItem>: View {
-    @EnvironmentObject var settings: SearchSettings
+    @ObservedObject var settings: SearchSettings
 
     let condition: SearchCondition
     @Binding var isExpanded: Bool // 展開状態のバインディング

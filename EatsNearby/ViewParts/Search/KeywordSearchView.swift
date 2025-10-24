@@ -8,19 +8,19 @@ import SwiftUI
 
 // キーワードを入力するview
 struct KeywordSearchView: View {
-    // キーワード入力の状態管理
-    @State private var keyword: String = ""
+    @ObservedObject var settings: SearchSettings
+
     var body: some View {
         VStack {
             HStack {
-                TextField("キーワード検索", text: $keyword)
+                TextField("キーワード検索", text: $settings.keyword)
                     .keyboardType(.default)
                     .submitLabel(.search)
 
                 // テキストクリアボタン
-                if !keyword.isEmpty {
+                if !settings.keyword.isEmpty {
                     Button {
-                        keyword = ""
+                        settings.keyword = ""
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(Color("accentColor").opacity(0.8))
@@ -39,6 +39,17 @@ struct KeywordSearchView: View {
     }
 }
 
-#Preview {
-    KeywordSearchView()
+struct KeywordSearchView_Previews: PreviewProvider {
+    // プレビュー用にダミーの SearchSettings インスタンスを作成
+    static var dummySettings: SearchSettings = {
+        let settings = SearchSettings()
+        settings.keyword = "ラーメン" // プレビュー用の初期値を設定
+        return settings
+    }()
+
+    static var previews: some View {
+        KeywordSearchView(settings: dummySettings)
+            .previewLayout(.sizeThatFits)
+    }
 }
+

@@ -8,8 +8,7 @@ import SwiftUI
 
 // 最大距離を設定するためのカスタムビュー
 struct DistanceSliderView: View {
-    // 距離 (km) の現在の値と親ビューをバインド
-    @Binding var selectedDistance: Double
+    @ObservedObject var settings: SearchSettings
     // スライダーの最小値、最大値、刻み幅
     let minDistance: Double = 0.1
     let maxDistance: Double = 5.0
@@ -29,7 +28,7 @@ struct DistanceSliderView: View {
                 Spacer()
 
                 // 現在の距離を小数点なしで表示
-                Text(formatDistance(selectedDistance))
+                Text(formatDistance(settings.distance))
                     .font(.subheadline)
                     .foregroundStyle(Color.secondary)
             }
@@ -37,7 +36,7 @@ struct DistanceSliderView: View {
 
             // スライダー本体
             Slider(
-                value: $selectedDistance,
+                value: $settings.distance,
                 in: minDistance...maxDistance,
                 step: step
             ) {
@@ -79,11 +78,16 @@ struct DistanceSliderView: View {
 
 
 struct DistanceSliderView_Previews: PreviewProvider {
-    @State static var distance: Double = 1.5 // 初期値を設定
+
+    static var dummySettings: SearchSettings = {
+            let settings = SearchSettings()
+            settings.distance = 1.5 // 初期値を設定
+            return settings
+        }()
 
     static var previews: some View {
         VStack {
-            DistanceSliderView(selectedDistance: $distance)
+            DistanceSliderView(settings: dummySettings)
         }
     }
 }

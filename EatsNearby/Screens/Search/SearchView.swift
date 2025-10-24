@@ -8,7 +8,10 @@
 import SwiftUI
 // 検索時に表示される画面
 struct SearchView: View {
-    @StateObject var settings = SearchSettings()
+    @ObservedObject var settings: SearchSettings
+
+    // モーダルを閉じるための環境変数
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         VStack(spacing: 8) {
@@ -25,26 +28,28 @@ struct SearchView: View {
                     .padding(.vertical, 20)
                     .cornerRadius(80)
             }
-            
+
             // 検索範囲を指定する
-            DistanceSliderView(selectedDistance: $settings.distance)
+            DistanceSliderView(settings: settings)
                 .padding(.bottom, 8)
 
             Divider().padding(.horizontal, 16)
             // キーワード検索する
-            KeywordSearchView()
+            KeywordSearchView(settings: settings)
             Text("お店の名前、料理名、駅名などで調べられます。")
                 .font(.caption)
                 .foregroundStyle(.secondary)
                 .padding(.leading, 16) // 左端をアイコンと揃える
                 .padding(.bottom, 8)
-            
+
             Divider().padding(.horizontal, 16)
             // ジャンルの指定
-            SearchConditionCardContent()
+            SearchConditionCardContent(settings: settings)
+
             Spacer()
             Button {
-                print("この条件で検索")
+                settings.isDirty = true
+                dismiss()
             } label: {
                 SearchBtnView()
             }
@@ -52,12 +57,10 @@ struct SearchView: View {
 
         }
         .background(Image("bgImage"))
-        // settingsオブジェクトを環境オブジェクトとして注入
-        .environmentObject(settings)
     }
 }
 
 
-#Preview {
-    SearchView()
-}
+//#Preview {
+//    SearchView()
+//}
