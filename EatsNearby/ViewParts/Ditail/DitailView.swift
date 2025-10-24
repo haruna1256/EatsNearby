@@ -7,19 +7,13 @@
 import SwiftUI
 
 struct DitailView: View {
-    // 仮データ
-    let shopName = "居酒屋 ホットペッパー"
-    let genreName = "居酒屋"
-    let genreCatch = "一口餃子専門店"
-    let address = "東京都渋谷区恵比寿1-1-1ABCビル1F"
-    let open = "月-金: 11:30-15:00, 17:30-23:00\n土日祝: 11:30-23:00"
-    let average = "「900円」「フリー2500円　宴会3500円」"
-    let phoneNumber = "03-1234-5678"
-    let imageUrl = "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?fit=crop&w=800&q=80"
-    let free_drink = "あり"
-    let free_food = "あり"
-    let private_room = "あり"
-    let capacity = "300"
+    // お店の情報を受け取る
+    let shop: Shop
+    // 適切な画像URLを選択する計算プロパティ
+    var shopImageUrl: String? {
+        // photo.pc.l, photo.mobile.l, logoImage の順に優先
+        return shop.photo?.pc?.l ?? shop.photo?.mobile?.l ?? shop.logoImage
+    }
 
     // 情報項目を整形するためのヘルパービュー
     private func DetailRow(label: String, value: String) -> some View {
@@ -42,16 +36,16 @@ struct DitailView: View {
         GeometryReader { geometry in
             ZStack() {
                 Image("bgImage")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                .ignoresSafeArea()
+                    .resizable()
+                    .scaledToFill()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .ignoresSafeArea()
 
-            // 詳細の内容はスクロールできるようにする
-            // 画像は画面の半分のサイズに
+                // 詳細の内容はスクロールできるようにする
+                // 画像は画面の半分のサイズに
                 ScrollView {
                     VStack(spacing: 0) {
-                        AsyncImage(url: URL(string: imageUrl)) { phase in
+                        AsyncImage(url: URL(string: shopImageUrl ?? "")) { phase in
                             switch phase {
                             case .success(let image):
                                 image
@@ -70,15 +64,15 @@ struct DitailView: View {
                     VStack(alignment: .leading, spacing: 20) {
                         // タイトルとジャンル
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(shopName)
+                            Text(shop.name)
                                 .font(.title2).bold()
                                 .foregroundStyle(Color("textColor"))
 
                             HStack() {
-                                Text(genreName)
+                                Text(shop.genre?.name ?? "")
                                     .font(.callout)
                                     .foregroundStyle(Color("accentColor").opacity(0.8))
-                                Text(genreCatch)
+                                Text(shop.catchPhrase ?? "キャッチフレーズなし")
                                     .font(.callout)
                                     .foregroundStyle(Color("accentColor").opacity(0.8))
                             }
@@ -88,16 +82,16 @@ struct DitailView: View {
 
                         // 詳細情報セクション (DetailRowを使用し、項目を揃える)
                         VStack(alignment: .leading, spacing: 10) {
-                            DetailRow(label: "住所", value: address)
-                            DetailRow(label: "営業時間", value: open)
-                            DetailRow(label: "電話番号", value: phoneNumber)
-                            DetailRow(label: "平均予算", value: average)
+                            DetailRow(label: "住所", value: shop.address ?? "情報なし")
+                            DetailRow(label: "営業時間", value: shop.open ?? "情報なし")
+                            DetailRow(label: "電話番号", value: shop.tel ?? "情報なし")
+                            DetailRow(label: "平均予算", value: shop.budget?.average ?? "情報なし")
                             HStack(spacing: 10) {
-                                DetailRow(label: "飲み放題", value: free_drink)
-                                DetailRow(label: "食べ放題", value: free_food)
+                                DetailRow(label: "飲み放題", value: shop.freeDrink ?? "なし")
+                                DetailRow(label: "食べ放題", value: shop.freeFood ?? "なし")
                             }
-                            DetailRow(label: "個室", value: private_room)
-                            DetailRow(label: "総席数", value: "\(capacity)席")
+                            DetailRow(label: "個室", value: shop.privateRoom ?? "なし")
+                            DetailRow(label: "総席数", value: shop.capacity.map { "\($0)席" } ?? "情報なし")
                         }
                         Spacer().frame(height: 20)
                     }
@@ -159,6 +153,31 @@ struct ActionButton: View {
     }
 }
 
-#Preview {
-    DitailView()
+struct DitailView_Previews: PreviewProvider {
+    static var previews: some View {
+        let dummyShop = Shop(
+            idString: "J0012345",
+            name: "居酒屋 ホットペッパー",
+            nameKana: "いざかや",
+            address: "東京都渋谷区恵比寿1-1-1ABCビル1F",
+            tel: "03-1234-5678",
+            lat: 35.6454, lng: 139.7135,
+            access: "恵比寿駅から徒歩3分", mobileAccess: nil,
+            open: "月-金: 11:30-15:00, 17:30-23:00 / 土日祝: 11:30-23:00",
+            close: "年中無休", party: "3,000円〜", course: "あり",
+            freeDrink: "あり", freeFood: "なし",
+            privateRoom: "あり", // Shop モデルが privateRoom を持っていると仮定
+            catchPhrase: "一口餃子専門店",
+            subGenre: nil,
+            genre: Genre(name: "居酒屋", code: "G001"),
+            budget: BudgetInfo(name: "3001〜4000円", code: "B003", average: "3,000円"),
+            capacity: 30,
+            logoImage: nil,
+            photo: Photo(
+                mobile: MobilePhoto(l: nil, s: nil),
+                pc: PCPhoto(l: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?fit=crop&w=800&q=80", m: nil, s: nil)
+            )
+        )
+        DitailView(shop: dummyShop)
+    }
 }

@@ -29,6 +29,7 @@ struct Shop: Codable, Identifiable {
     let course: String?             // コース
     let freeDrink: String?          // 飲み放題
     let freeFood: String?           // 食べ放題
+    let privateRoom: String?        // 個室
 
     // 詳細情報
     let catchPhrase: String?        // お店キャッチ
@@ -62,6 +63,7 @@ struct Shop: Codable, Identifiable {
         case subGenre = "sub_genre"
         case genre
         case budget
+        case privateRoom
         case capacity
         case logoImage = "logo_image"
         case photo
