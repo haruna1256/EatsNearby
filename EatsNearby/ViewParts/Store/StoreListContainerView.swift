@@ -17,6 +17,7 @@ struct StoreListContainerView: View {
         VStack(alignment: .leading, spacing: 12) {
             Text("現在地周辺のお店 (\(shops.count)件)")
                 .font(.headline)
+                .foregroundStyle(Color("accentColor"))
                 .padding(.leading, 16)
 
             if shops.isEmpty {

@@ -32,7 +32,7 @@ enum APIClientError: Error {
 class APIClient {
 
     private let apiKey: String
-    private let baseURL = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/"
+    private let baseURL = "https://webservice.recruit.co.jp/hotpepper/gourmet/v1/"
 
     // 初期動作
     init() throws {

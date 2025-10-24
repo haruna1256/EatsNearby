@@ -10,9 +10,22 @@
 		C3C095532EA3CC2800743357 /* EatsNearby.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EatsNearby.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		C3C097232EAB16CF00743357 /* Exceptions for "EatsNearby" folder in "EatsNearby" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = C3C095522EA3CC2800743357 /* EatsNearby */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C3C095552EA3CC2800743357 /* EatsNearby */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C3C097232EAB16CF00743357 /* Exceptions for "EatsNearby" folder in "EatsNearby" target */,
+			);
 			path = EatsNearby;
 			sourceTree = "<group>";
 		};
@@ -257,6 +270,7 @@
 				DEVELOPMENT_TEAM = 87W7C4VKFR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = EatsNearby/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "現在地を地図上に表示し、現在地を特定するために使用します。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -289,6 +303,7 @@
 				DEVELOPMENT_TEAM = 87W7C4VKFR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = EatsNearby/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "現在地を地図上に表示し、現在地を特定するために使用します。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
