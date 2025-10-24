@@ -14,11 +14,22 @@ struct TopPageView: View {
     @StateObject var locationManager = LocationManager()
     // 検索ページに表示するモーダルの状態の管理
     @State private var isShowingSearch = false
+    // 検索設定をここで作成し、共有の中心とする
+    @StateObject var searchSettings = SearchSettings()
     // ViewModelを初期化
     init() {
         let sharedLocationManager = LocationManager()
+        let sharedSearchSettings = SearchSettings()
+
+        // 自身（TopPageView）の @StateObject を初期化
         _locationManager = StateObject(wrappedValue: sharedLocationManager)
-        _viewModel = StateObject(wrappedValue: TopPageViewModel(locationManager: sharedLocationManager))
+        _searchSettings = StateObject(wrappedValue: sharedSearchSettings)
+
+        // ViewModel に両方のオブジェクトを渡して初期化
+        _viewModel = StateObject(wrappedValue: TopPageViewModel(
+            locationManager: sharedLocationManager,
+            searchSettings: sharedSearchSettings
+        ))
     }
     var body: some View {
         GeometryReader { geometry in
@@ -60,7 +71,7 @@ struct TopPageView: View {
                     alignment: .bottomTrailing
                 )
                 .sheet(isPresented: $isShowingSearch) {
-                    SearchView()
+                    SearchView(settings: searchSettings)
                 }
             }
             .background(

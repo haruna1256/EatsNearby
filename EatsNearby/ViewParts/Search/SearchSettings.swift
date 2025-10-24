@@ -19,6 +19,8 @@ class SearchSettings: ObservableObject {
     @Published var selectedBudget: HotpepperBudget? = nil
     // こだわりの条件は複数選択
     @Published var selectedOptions: Set<HotpepperOption> = []
+    // 検索ボタンが押された時のフラグ
+    @Published var isDirty: Bool = false
 
     // 展開/折りたたみ状態の管理
     @Published var isGenreExpanded: Bool = false

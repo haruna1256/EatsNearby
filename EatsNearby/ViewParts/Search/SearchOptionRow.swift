@@ -7,8 +7,7 @@
 import SwiftUI
 // その他の条件を選択する複数トグルビュー
 struct SearchOptionRow: View {
-    @EnvironmentObject var settings: SearchSettings
-
+    @ObservedObject var settings: SearchSettings
     let condition: SearchCondition = .options // 固定
     let accentColor = Color("accentColor")
     let accentSubColor = Color("accentSubColor")

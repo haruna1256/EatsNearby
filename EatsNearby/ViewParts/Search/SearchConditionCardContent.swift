@@ -8,13 +8,14 @@ import SwiftUI
 
 // 条件を表示するUI
 struct SearchConditionCardContent: View {
-    @EnvironmentObject var settings: SearchSettings
-    
+    @ObservedObject var  settings: SearchSettings
+
     var body: some View {
         VStack(spacing: 0) {
 
             // ジャンル
             SearchExpandableRow(
+                settings: settings,
                 condition: .genre,
                 isExpanded: $settings.isGenreExpanded,
                 selectedItem: $settings.selectedGenre
@@ -26,6 +27,7 @@ struct SearchConditionCardContent: View {
 
             // 予算
             SearchExpandableRow(
+                settings: settings,
                 condition: .budget,
                 isExpanded: $settings.isBudgetExpanded,
                 selectedItem: $settings.selectedBudget
@@ -35,18 +37,19 @@ struct SearchConditionCardContent: View {
             }
 
             // こだわり条件 (チェックマーク形式)
-            SearchOptionRow()
+            SearchOptionRow(settings: settings)
         }
+        .environmentObject(settings)
     }
 }
 
-#Preview {
-    // プレビュー表示したいビューのインスタンスを作成
-    SearchConditionCardContent()
-    // ダミーの SearchSettings インスタンスを注入する
-    .environmentObject(SearchSettings())
-
-    // プレビューを見やすくするために、背景やパディングを追加しても良い
-    .padding()
-    .background(Color(.systemGray6))
+struct SearchConditionCardContent_Previews: PreviewProvider {
+        static var previews: some View {
+            // ダミーの SearchSettings インスタンスを作成
+            let dummySettings = SearchSettings()
+            SearchConditionCardContent(settings: dummySettings)
+                .padding()
+                .background(Color(.systemGray6))
+                .previewLayout(.sizeThatFits)
+        }
 }
