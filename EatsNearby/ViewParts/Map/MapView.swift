@@ -16,6 +16,8 @@ struct MapView: View {
 
     // タップされたお店を保持する
     @State private var selectedShop: Shop? = nil
+    // MapのselectionにバインドするためのIDを保持する変数
+    @State private var selectedShopId: String? = nil
 
     /// MapCameraPosition を管理する @State
     @State private var mapPosition: MapCameraPosition = .region(
@@ -28,7 +30,7 @@ struct MapView: View {
     var body: some View {
         ZStack {
             // Map
-            Map(position: $mapPosition, interactionModes: [.all]) {
+            Map(position: $mapPosition, interactionModes: [.all], selection: $selectedShopId) {
                 // 現在地を青丸で表示
                 UserAnnotation()
                 ForEach(shops) { shop in
@@ -71,8 +73,16 @@ struct MapView: View {
                 .padding()
             }
         }
-        .onTapGesture { tapPoint in
-            // Map上のピンのタップは Marker の action で処理するのが最も簡単です
+        // selectedShopId の変更を監視し、selectedShop を更新する
+        .onChange(of: selectedShopId) { id in
+            print("ピンがタップされました。ID: \(id ?? "nil")")
+            // IDがセットされたら、shops配列から対応するお店を見つけて selectedShop にセットする
+                if let id = id {
+                    // IDがnil（シートが閉じたなど）なら、selectedShop もnilにする
+                    self.selectedShop = self.shops.first(where: { $0.id == id })
+                } else {
+                    self.selectedShop = nil
+                }
         }
 
         // 詳細情報をシートで表示する
@@ -80,8 +90,8 @@ struct MapView: View {
             // ShopDetailView（お店の詳細情報を表示するカスタムビュー）を呼び出す
             DetailPageView(shop: shop)
         }
-
-        .onAppear {            // 初期 MapCameraPosition を現在地に設定する
+        // 初期 MapCameraPosition を現在地に設定する
+        .onAppear {
             if let loc = locationManager.currentLocation {
                 mapPosition = .region(MKCoordinateRegion(
                     center: loc.coordinate,
