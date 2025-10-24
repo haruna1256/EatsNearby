@@ -16,11 +16,11 @@ struct TopPageView: View {
     @State private var isShowingSearch = false
     // ViewModelを初期化
     init() {
-        _viewModel = StateObject(wrappedValue: TopPageViewModel(locationManager: LocationManager()))
+        let sharedLocationManager = LocationManager()
+        _locationManager = StateObject(wrappedValue: sharedLocationManager)
+        _viewModel = StateObject(wrappedValue: TopPageViewModel(locationManager: sharedLocationManager))
     }
     var body: some View {
-        // 位置情報の要求
-        let _ = locationManager.requestLocation()
         GeometryReader { geometry in
             // マップとスクロールの縦幅は画面の半分のサイズに
             VStack(spacing: 6) {
@@ -40,7 +40,7 @@ struct TopPageView: View {
                                 .foregroundStyle(Color("accentColor"))
                                 .padding()
                         } else {
-                            StoreListView()
+                            StoreListContainerView(shops: viewModel.nearbyShops, locationManager: locationManager)
                         }
                     }
                     .padding(.horizontal, 16) // リスト全体に水平方向の余白
@@ -67,6 +67,10 @@ struct TopPageView: View {
                 Image("bgImage")
                     .resizable()
             )
+        }
+        // 位置情報の要求
+        .onAppear {
+            locationManager.requestLocation()
         }
     }
 }

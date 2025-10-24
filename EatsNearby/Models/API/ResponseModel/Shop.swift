@@ -18,7 +18,6 @@ struct Shop: Codable, Identifiable {
     let tel: String?                // 電話番号
     let lat: Double?                // 緯度
     let lng: Double?                // 経度
-    let range: Int                  // 検索範囲
     let access: String?             // 交通アクセス
     let mobileAccess: String?       // 携帯用交通アクセス
 
@@ -50,7 +49,6 @@ struct Shop: Codable, Identifiable {
         case address
         case tel
         case lat
-        case range
         case lng
         case access
         case mobileAccess = "mobile_access"
