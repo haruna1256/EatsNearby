@@ -1,5 +1,5 @@
 //
-//  DitailPageView.swift
+//  DetailPageView.swift
 //  EatsNearby
 //
 //  Created by 川岸遥奈 on 2025/10/20.
@@ -7,14 +7,24 @@
 
 import SwiftUI
 
-struct DitailPageView: View {
+struct DetailPageView: View {
     let shop: Shop
+    // ルート検索を実行するためのクロージャ
+    let onFindRoute: (Shop) -> Void
+
+    @Environment(\.dismiss) var dismiss
     var body: some View {
-        DitailView(shop: shop)
+        DetailView(shop: shop, onFindRoute: { selectedShop in
+                    // MapViewにアクションを伝える
+                    self.onFindRoute(selectedShop)
+
+                    // 詳細シートを閉じる
+                    dismiss() // シートを閉じる
+                })
     }
 }
 
-struct DitailPageView_Previews: PreviewProvider {
+struct DetailPageView_Previews: PreviewProvider {
     static var previews: some View {
         let dummyShop = Shop(
             idString: "J0012345",
@@ -39,6 +49,6 @@ struct DitailPageView_Previews: PreviewProvider {
                 pc: PCPhoto(l: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?fit=crop&w=800&q=80", m: nil, s: nil)
             )
         )
-        DitailPageView(shop: dummyShop)
+        DetailPageView(shop: dummyShop, onFindRoute: { _ in print("Route action triggered in Preview") })
     }
 }

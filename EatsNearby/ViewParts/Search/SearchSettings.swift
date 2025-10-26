@@ -14,6 +14,17 @@ class SearchSettings: ObservableObject {
     var rangeCode: Int {
         return Int(distance.rounded())
     }
+    // MapCircleに渡すための検索範囲（メートル）
+    var rangeInMeters: Double {
+            switch rangeCode {
+            case 1: return 300.0
+            case 2: return 500.0
+            case 3: return 1000.0
+            case 4: return 2000.0
+            case 5: return 3000.0
+            default: return 1000.0 // デフォルトは1km
+            }
+        }
     // 選択されたジャンルと予算の状態
     @Published var selectedGenre: HotpepperGenre? = nil
     @Published var selectedBudget: HotpepperBudget? = nil

@@ -22,7 +22,7 @@ struct SearchView: View {
                     .frame(height: 210)
                     .padding(.horizontal, 15)
                     .padding(.vertical, 15)
-                MapView(locationManager: settings.locationManager)
+                SearchMapView(locationManager: settings.locationManager, settings: settings)
                     .frame( height: 200)
                     .padding(.horizontal, 20)
                     .padding(.vertical, 20)
