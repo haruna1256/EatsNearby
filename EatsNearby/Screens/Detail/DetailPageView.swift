@@ -31,7 +31,6 @@ struct DetailPageView_Previews: PreviewProvider {
             name: "居酒屋 ホットペッパー",
             nameKana: "いざかや",
             address: "東京都渋谷区恵比寿1-1-1ABCビル1F",
-            tel: "03-1234-5678",
             lat: 35.6454, lng: 139.7135,
             access: "恵比寿駅から徒歩3分", mobileAccess: nil,
             open: "月-金: 11:30-15:00, 17:30-23:00 / 土日祝: 11:30-23:00",
@@ -47,7 +46,9 @@ struct DetailPageView_Previews: PreviewProvider {
             photo: Photo(
                 mobile: MobilePhoto(l: nil, s: nil),
                 pc: PCPhoto(l: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?fit=crop&w=800&q=80", m: nil, s: nil)
-            )
+            ),
+            urls: nil
+
         )
         DetailPageView(shop: dummyShop, onFindRoute: { _ in print("Route action triggered in Preview") })
     }

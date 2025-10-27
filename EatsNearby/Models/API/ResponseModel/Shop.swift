@@ -15,7 +15,6 @@ struct Shop: Codable, Identifiable, Hashable {
     let name: String                // 店舗名
     let nameKana: String?           // 店舗名（かな）
     let address: String?            // 住所
-    let tel: String?                // 電話番号
     let lat: Double?                // 緯度
     let lng: Double?                // 経度
     let access: String?             // 交通アクセス
@@ -42,13 +41,15 @@ struct Shop: Codable, Identifiable, Hashable {
     let logoImage: String?          // ロゴ画像
     let photo: Photo?               // 写真
 
+    // お店のurl
+    let urls: Urls?                 // お店のurl
+
     // JSONのキーとプロパティ名を対応させる
     enum CodingKeys: String, CodingKey, Hashable {
         case idString = "id"
         case name
         case nameKana = "name_kana"
         case address
-        case tel
         case lat
         case lng
         case access
@@ -67,5 +68,6 @@ struct Shop: Codable, Identifiable, Hashable {
         case capacity
         case logoImage = "logo_image"
         case photo
+        case urls
     }
 }

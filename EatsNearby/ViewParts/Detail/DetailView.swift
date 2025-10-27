@@ -89,7 +89,6 @@ struct DetailView: View {
                         VStack(alignment: .leading, spacing: 10) {
                             DetailRow(label: "住所", value: shop.address ?? "情報なし")
                             DetailRow(label: "営業時間", value: shop.open ?? "情報なし")
-                            DetailRow(label: "電話番号", value: shop.tel ?? "情報なし")
                             DetailRow(label: "平均予算", value: shop.budget?.average ?? "情報なし")
                             HStack(spacing: 10) {
                                 DetailRow(label: "飲み放題", value: shop.freeDrink ?? "なし")
@@ -109,13 +108,21 @@ struct DetailView: View {
                             // 地図を見るボタン
                             ActionButton(iconName: "map", label: "ルートを検索", action: {  onFindRoute(shop) })
 
-                            // 電話をかけるボタン
-                            ActionButton(iconName: "phone.fill", label: "電話をかける", action: { print("電話をかける") })
                         }
 
-                        // 予約するボタン（メインアクション）
+                        // 予約するボタン
                         Button(action: {
-                            print("予約する")
+                            // PC用URL、なければモバイル用URLを取得
+                                if let urlString = shop.urls?.pc ?? shop.urls?.mobile,
+                                   let url = URL(string: urlString) {
+
+                                    // URLを開く
+                                    UIApplication.shared.open(url)
+
+                                    print("URLへ遷移: \(urlString)")
+                                } else {
+                                    print("予約URLが取得できませんでした。")
+                                }
                         }) {
                             Text("予約する")
                                 .font(.headline).bold()
@@ -164,7 +171,6 @@ struct DetailView_Previews: PreviewProvider {
             name: "居酒屋 ホットペッパー",
             nameKana: "いざかや",
             address: "東京都渋谷区恵比寿1-1-1ABCビル1F",
-            tel: "03-1234-5678",
             lat: 35.6454, lng: 139.7135,
             access: "恵比寿駅から徒歩3分", mobileAccess: nil,
             open: "月-金: 11:30-15:00, 17:30-23:00 / 土日祝: 11:30-23:00",
@@ -180,7 +186,8 @@ struct DetailView_Previews: PreviewProvider {
             photo: Photo(
                 mobile: MobilePhoto(l: nil, s: nil),
                 pc: PCPhoto(l: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?fit=crop&w=800&q=80", m: nil, s: nil)
-            )
+            ),
+            urls: nil
         )
         DetailView(shop: dummyShop, onFindRoute: { _ in print("Route action triggered in Preview") })
     }
