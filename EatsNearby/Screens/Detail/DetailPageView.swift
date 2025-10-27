@@ -15,12 +15,12 @@ struct DetailPageView: View {
     @Environment(\.dismiss) var dismiss
     var body: some View {
         DetailView(shop: shop, onFindRoute: { selectedShop in
-                    // MapViewにアクションを伝える
-                    self.onFindRoute(selectedShop)
-
-                    // 詳細シートを閉じる
-                    dismiss() // シートを閉じる
-                })
+            // MapViewにアクションを伝える
+            self.onFindRoute(selectedShop)
+            // 詳細シートを閉じる
+            dismiss() // シートを閉じる
+        })
+        .padding(.bottom, 100)
     }
 }
 

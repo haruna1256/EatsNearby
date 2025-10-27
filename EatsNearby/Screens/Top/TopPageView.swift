@@ -35,48 +35,58 @@ struct TopPageView: View {
         ))
     }
     var body: some View {
-        NavigationStack {
-            GeometryReader { geometry in
-                // マップとスクロールの縦幅は画面の半分のサイズに
-                VStack(spacing: 6) {
-                    // マップの表示
-                    MapView(locationManager: locationManager,
-                            shops: viewModel.nearbyShops,
-                            onFindRoute: { selectedShop in
-                        self.findRoute(to: selectedShop)},
-                        route: route
-                    )
-                    .frame(height: geometry.size.height / 2)
+        NavigationStack() {
+            VStack(spacing: 0) {
+                HeaderView()
+                GeometryReader { geometry in
+                    // マップとスクロールの縦幅は画面の半分のサイズに
+                    VStack(spacing: 6) {
+                        // マップの表示
+                        MapView(locationManager: locationManager,
+                                shops: viewModel.nearbyShops,
+                                onFindRoute: { selectedShop in
+                            self.findRoute(to: selectedShop)},
+                                route: route
+                        )
+                        .frame(height: geometry.size.height / 2)
 
-                    // 周辺のお店の検索
-                    ScrollView {
-                        VStack(spacing: 16) {
-                            // ロード中、エラー、リストを表示
-                            if viewModel.isLoading {
-                                ProgressView("現在地周辺のお店を検索中...")
-                                    .padding()
-                            } else if let error = viewModel.errorMessage {
-                                Text("\(error)")
-                                    .foregroundStyle(Color("accentColor"))
-                                    .padding()
-                            } else {
-                                StoreListContainerView(
-                                    shops: viewModel.nearbyShops,
-                                    onFindRoute: { selectedShop in
-                                self.findRoute(to: selectedShop)},
-                                    locationManager: locationManager
-                                )
+                        // 周辺のお店の検索
+                        ScrollView {
+                            VStack(spacing: 16) {
+                                // ロード中、エラー、リストを表示
+                                if viewModel.isLoading {
+                                    ProgressView("現在地周辺のお店を検索中...")
+                                        .padding()
+                                } else if let error = viewModel.errorMessage {
+                                    Text("\(error)")
+                                        .foregroundStyle(Color("accentColor"))
+                                        .padding()
+                                } else {
+                                    StoreListContainerView(
+                                        shops: viewModel.nearbyShops,
+                                        onFindRoute: { selectedShop in
+                                            self.findRoute(to: selectedShop)},
+                                        locationManager: locationManager
+                                    )
+                                    .padding(.bottom, 8)
+                                }
                             }
-                        }
-                        .padding(.horizontal, 16) // リスト全体に水平方向の余白
-                        .padding(.top, 8)         // 上部に少し余白
+                            .padding(.horizontal, 16) // リスト全体に水平方向の余白
+                            .padding(.top, 8)         // 上部に少し余白
 
-                    }
-                    .frame(height: geometry.size.height / 2)
-                    .sheet(isPresented: $isShowingSearch) {
-                        SearchView(settings: searchSettings)
+                        }
+                        .frame(height: geometry.size.height / 2)
+                        .sheet(isPresented: $isShowingSearch) {
+                            SearchView(settings: searchSettings)
+                        }
                     }
                 }
+                .background(
+                    Image("bgImage")
+                        .resizable()
+                )
+                .toolbar(.hidden, for: .navigationBar) // ナビゲーションバーを非表示
+                .ignoresSafeArea(.container, edges: [.top, .bottom])
                 .overlay(
                     Button(action: {
                         // 検索ページを表示するフラグをONにする
@@ -87,10 +97,6 @@ struct TopPageView: View {
                             .padding(.trailing, 8)
                     },
                     alignment: .bottomTrailing
-                )
-                .background(
-                    Image("bgImage")
-                        .resizable()
                 )
             }
         }
