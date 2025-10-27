@@ -59,7 +59,8 @@ class APIClient {
             URLQueryItem(name: "lat", value: String(settings.locationManager.latitude)),
             URLQueryItem(name: "lng", value: String(settings.locationManager.longitude)),
             URLQueryItem(name: "range", value: String(settings.rangeCode)),
-            URLQueryItem(name: "format", value: "json")
+            URLQueryItem(name: "format", value: "json"),
+            URLQueryItem(name: "count", value: "30")
         ]
 
         // キーワードがあれば追加

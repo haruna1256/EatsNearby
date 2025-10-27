@@ -1,14 +1,16 @@
 //
-//  DitailView.swift
+//  DetailView.swift
 //  EatsNearby
 //
 //  Created by 川岸遥奈 on 2025/10/20.
 //
 import SwiftUI
 
-struct DitailView: View {
+struct DetailView: View {
     // お店の情報を受け取る
     let shop: Shop
+    // ルート検索を実行するためのクロージャ
+    let onFindRoute: (Shop) -> Void
     // 適切な画像URLを選択する計算プロパティ
     var shopImageUrl: String? {
         // photo.pc.l, photo.mobile.l, logoImage の順に優先
@@ -104,7 +106,8 @@ struct DitailView: View {
                         HStack(spacing: 16) {
 
                             // 地図を見るボタン
-                            ActionButton(iconName: "map", label: "ルートを検索", action: { print("地図へ") })
+                            ActionButton(iconName: "map", label: "ルートを検索", action: {  onFindRoute(shop) })
+
                         }
 
                         // 予約するボタン
@@ -161,7 +164,7 @@ struct ActionButton: View {
     }
 }
 
-struct DitailView_Previews: PreviewProvider {
+struct DetailView_Previews: PreviewProvider {
     static var previews: some View {
         let dummyShop = Shop(
             idString: "J0012345",
@@ -186,6 +189,6 @@ struct DitailView_Previews: PreviewProvider {
             ),
             urls: nil
         )
-        DitailView(shop: dummyShop)
+        DetailView(shop: dummyShop, onFindRoute: { _ in print("Route action triggered in Preview") })
     }
 }
