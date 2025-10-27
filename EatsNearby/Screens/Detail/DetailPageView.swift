@@ -14,15 +14,37 @@ struct DetailPageView: View {
 
     @Environment(\.dismiss) var dismiss
     var body: some View {
-        DetailView(shop: shop, onFindRoute: { selectedShop in
-            // MapViewにアクションを伝える
-            self.onFindRoute(selectedShop)
-            // 詳細シートを閉じる
-            dismiss() // シートを閉じる
-        })
-        .padding(.bottom, 100)
+        VStack(spacing: 0) {
+
+            DetailView(shop: shop, onFindRoute: { selectedShop in
+                // MapViewにアクションを伝える
+                self.onFindRoute(selectedShop)
+                // 詳細シートを閉じる
+                dismiss() // シートを閉じる
+            })
+            .padding(.bottom, 100)
+        }
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.backward")
+                        Text("戻る")
+                    }
+                }
+                .foregroundStyle(Color("accentColor"))
+            }
+        }
+        .toolbar(.visible, for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
+        .toolbarBackground(.white.opacity(0.9), for: .navigationBar)
     }
+
 }
+
 
 struct DetailPageView_Previews: PreviewProvider {
     static var previews: some View {

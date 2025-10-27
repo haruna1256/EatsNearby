@@ -102,27 +102,25 @@ struct DetailView: View {
                     .padding()
                     .frame(maxWidth: .infinity)
                     HStack(spacing: 12) {
-                        // 地図を見る/電話をかける ボタン
-                        HStack(spacing: 16) {
 
-                            // 地図を見るボタン
-                            ActionButton(iconName: "map", label: "ルートを検索", action: {  onFindRoute(shop) })
+                        // 地図を見るボタン
+                        ActionButton(iconName: "map", label: "ルートを検索", action: {  onFindRoute(shop) })
 
-                        }
+
 
                         // 予約するボタン
                         Button(action: {
                             // PC用URL、なければモバイル用URLを取得
-                                if let urlString = shop.urls?.pc ?? shop.urls?.mobile,
-                                   let url = URL(string: urlString) {
+                            if let urlString = shop.urls?.pc ?? shop.urls?.mobile,
+                               let url = URL(string: urlString) {
 
-                                    // URLを開く
-                                    UIApplication.shared.open(url)
+                                // URLを開く
+                                UIApplication.shared.open(url)
 
-                                    print("URLへ遷移: \(urlString)")
-                                } else {
-                                    print("予約URLが取得できませんでした。")
-                                }
+                                print("URLへ遷移: \(urlString)")
+                            } else {
+                                print("予約URLが取得できませんでした。")
+                            }
                         }) {
                             Text("予約する")
                                 .font(.headline).bold()
