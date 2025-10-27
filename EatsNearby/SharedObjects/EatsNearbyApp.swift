@@ -11,7 +11,7 @@ import SwiftUI
 struct EatsNearbyApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TopPageView()
         }
     }
 }
